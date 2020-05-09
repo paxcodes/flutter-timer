@@ -7,23 +7,38 @@ class TimerPage extends StatefulWidget {
   _TimerPageState createState() => _TimerPageState();
 }
 
-class _TimerPageState extends State<TimerPage> {
+class _TimerPageState extends State<TimerPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+
+  String get timerString {
+    Duration duration = controller.duration * controller.value;
+    return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(minutes: 2, seconds: 10),
+    );
+    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Timer"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '00:00',
-            ),
-          ],
-        ),
-      ),
+      body: Stack(children: <Widget>[
+        AnimatedBuilder(
+            animation: controller,
+            builder: (BuildContext context, Widget child) {
+              return Text(timerString);
+            }),
+      ]),
     );
   }
 }
