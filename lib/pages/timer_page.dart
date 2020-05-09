@@ -23,7 +23,7 @@ class _TimerPageState extends State<TimerPage>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(minutes: 2, seconds: 10),
+      duration: Duration(seconds: 2),
     );
     controller.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
