@@ -24,6 +24,26 @@ class _TimerPageState extends State<TimerPage>
       duration: Duration(minutes: 2, seconds: 10),
     );
     controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed) {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Time is up!"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            });
+      }
+    });
   }
 
   @override
