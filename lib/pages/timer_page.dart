@@ -12,7 +12,9 @@ class _TimerPageState extends State<TimerPage>
   AnimationController controller;
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.value == 0
+        ? controller.duration
+        : controller.duration * controller.value;
     return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
