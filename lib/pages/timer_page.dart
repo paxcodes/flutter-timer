@@ -25,7 +25,6 @@ class _TimerPageState extends State<TimerPage>
       vsync: this,
       duration: Duration(minutes: 2, seconds: 10),
     );
-    controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
     controller.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
         showDialog(
@@ -59,14 +58,20 @@ class _TimerPageState extends State<TimerPage>
       body: Stack(children: <Widget>[
         Positioned.fill(
           child: Center(
-            child: AnimatedBuilder(
-                animation: controller,
-                builder: (BuildContext context, Widget child) {
-                  return Text(
-                    timerString,
-                    style: themeData.textTheme.display4,
-                  );
-                }),
+            child: FlatButton(
+              onPressed: () {
+                controller.reverse(
+                    from: controller.value == 0.0 ? 1.0 : controller.value);
+              },
+              child: AnimatedBuilder(
+                  animation: controller,
+                  builder: (BuildContext context, Widget child) {
+                    return Text(
+                      timerString,
+                      style: themeData.textTheme.display4,
+                    );
+                  }),
+            ),
           ),
         ),
       ]),
