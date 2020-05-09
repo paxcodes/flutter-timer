@@ -50,4 +50,10 @@ class _TimerPageState extends State<TimerPage>
       ]),
     );
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 }
