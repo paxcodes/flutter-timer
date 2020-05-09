@@ -28,16 +28,25 @@ class _TimerPageState extends State<TimerPage>
 
   @override
   Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Timer"),
       ),
       body: Stack(children: <Widget>[
-        AnimatedBuilder(
-            animation: controller,
-            builder: (BuildContext context, Widget child) {
-              return Text(timerString);
-            }),
+        Positioned.fill(
+          child: Center(
+            child: AnimatedBuilder(
+                animation: controller,
+                builder: (BuildContext context, Widget child) {
+                  return Text(
+                    timerString,
+                    style: themeData.textTheme.display4,
+                  );
+                }),
+          ),
+        ),
       ]),
     );
   }
